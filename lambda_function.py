@@ -2,11 +2,14 @@ import base64
 import boto3
 import hashlib
 import datetime
+import os
 
 s3 = boto3.resource('s3')
-bucket = 's3_bucket_name'
 
 def lambda_handler(event, context):
+    bucket = os.getenv("BUCKET", None)
+    if bucket is None: exit(1)
+
     try:
         contenttype = event['headers']['Content-Type']
         remoteip = event['headers']['X-Forwarded-For']
