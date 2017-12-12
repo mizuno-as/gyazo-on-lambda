@@ -9,11 +9,10 @@ bucket = 's3_bucket_name'
 def lambda_handler(event, context):
     try:
         contenttype = event['headers']['Content-Type']
-        subtype = contenttype.split('/')
         remoteip = event['headers']['X-Forwarded-For']
-        if subtype[0] == 'image':
+        if contenttype == 'image/png':
             img = base64.b64decode(event['body'])
-            key = hashlib.md5((remoteip + datetime.datetime.now().strftime('%s')).encode('utf-8')).hexdigest() + '.' + subtype[1]
+            key = hashlib.md5((remoteip + datetime.datetime.now().strftime('%s')).encode('utf-8')).hexdigest() + '.png'
             obj = s3.Object(bucket, key)
             obj.put(Body=img, ContentType=contenttype)
             return {
