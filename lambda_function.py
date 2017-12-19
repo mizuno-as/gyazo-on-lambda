@@ -28,8 +28,8 @@ def lambda_handler(event, context):
     except ValueError as e:
         print(e)
         return {
-            'statusCode': 500,
-            'body': 'Content Type Error',
+            'statusCode': 415,
+            'body': 'Unsupported media type',
         }
 
     except Exception as e:
