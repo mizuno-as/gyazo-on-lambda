@@ -11,7 +11,7 @@ def lambda_handler(event, context):
     if bucket is None: exit(1)
 
     try:
-        contenttype = event['headers']['Content-Type']
+        contenttype = event['headers']['content-type']
         remoteip = event['headers']['X-Forwarded-For']
         if contenttype == 'image/png':
             img = base64.b64decode(event['body'])
