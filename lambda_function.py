@@ -3,12 +3,13 @@ import boto3
 import hashlib
 import datetime
 import os
+import sys
 
 s3 = boto3.resource('s3')
 
 def lambda_handler(event, context):
     bucket = os.getenv("BUCKET", None)
-    if bucket is None: exit(1)
+    if bucket is None: sys.exit(1)
 
     try:
         contenttype = event['headers']['content-type']
